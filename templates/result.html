@@ -1,0 +1,535 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% static 'Contours' as contourUrl%}
+{% static 'Vessel_overlayed' as vesselUrl%}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-items: center;
+    text-align: center;
+    background-color: #202020;
+    color: white;
+  }
+  #hidden-report {
+    margin: 5%;
+  }
+  .hidden-brand {
+    color: #4169E1;
+    font-size: 1.5rem;
+  }
+  .hidden-display-1 {
+    font-size: 6rem;
+  }
+  .hidden-display-1 {
+    font-size: 3rem;
+  }
+  .hidden-image{
+    width: 25vw;
+    margin:10px;
+  }
+  .h-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #h-infection-overview {
+    width: 200px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+</style>
+<div id="loader">
+    <div class="loader">
+        <h1 class="display-1 brand loader-text">Scanese</h1>
+    </div>
+</div>
+<div id="hidden-report">
+  <h3 class="hidden-brand">Scanese</h3>
+
+    <!-- pie and percent chart -->
+    <h1 class="hidden-display-1"><span class="counter" data-target="{{ mean.0.0 }}">0.00</span>%</h1>
+
+        <div class="col-md-6 col-12 align-items-center my-5">
+            
+            <div class="row align-items-center">
+                <div class="col-sm h-container">
+                  <h3 class="mb-5 hori-margin2">Distribution graph</h3>
+                    <div id="h-infection-pie-chart" data-colors='["#e9692c", "#4169E1"]' class="apex-charts"></div>
+                    
+                </div>
+                <div class="col-sm align-self-center">
+                    <div class="mt-4 mt-sm-0">
+                        <div>
+                            <p class="mb-2">Vessel = <span class="text-muted font-size-14 fw-normal">{{ mean.0.0}} %</span></p>
+                            <h6></h6>
+                        </div>
+
+                        <div class="mt-4 pt-2">
+                            <p class="mb-2">Non Vessel = <span class="text-muted font-size-14 fw-normal">{{ mean.0.1 }} %</span></p>
+                            <h6></h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-2 col-12 align-items-center my-5 h-container">
+            <h3 class="mb-5 hori-margin1">Infection Percentage</h3><br>
+            <div class="row align-items-center h-container">
+                <div class="col-sm h-container">
+                    <div id="h-infection-overview" data-colors='["#5156be", "#34c38f"]' class="apex-charts mx-auto"></div>
+                </div>
+            </div>
+        </div>
+    
+
+    <!-- bar graph -->
+
+    <div class="row large-vertical-margin">
+      <div>
+        <h3 class="mb-5">Comparison of all aspects</h3>
+        <div id="h-column_chart_datalabel" data-colors='["#5156be"]' class="apex-charts" dir="ltr"></div>
+      </div>
+      
+    </div>
+      
+
+    <!-- Contours -->
+
+        <div class="col-md-6 col-12 my-auto">
+            <h3 class="hidden-display-4">Contours</h3>
+            <div class="col-8 mx-auto mt-4">
+              <p>Ok, how can we isolate the desired area?
+                So we used an algorithm to identify close sets or any kind of contours in the image. The algorithm we used is known as Marching squares.</p>
+            </div>
+            
+        </div>
+                  
+                  {% for url in contour %}
+                  
+                  {% if forloop.counter0 == 0 %}
+                    <img src="{{contourUrl}}/{{url}}" class="hidden-image" alt="...">
+                  {% else %}
+                    <img src="{{contourUrl}}/{{url}}" class="hidden-image" alt="...">
+                  {% endif %}
+                {% endfor %}
+                  
+                
+
+    <!-- Vessel Overlayed -->
+
+      <div class="col-md-6 col-12 my-auto">
+        <h3 class="hidden-display-4">Vessel Overlayed</h3>
+        <div class="col-8 mx-auto mt-4">
+          <p>Cannot see the blockages clearly?
+            We have enhanced the images that will highlight the tumor cells or the alveoli blockages in the lungs.</p>
+        </div>
+    </div>
+                
+                {% for url in vessel_overlayed %}
+                
+                {% if forloop.counter0 == 0 %}
+                  <img src="{{vesselUrl}}/{{url}}" class="hidden-image" alt="...">
+                {% else %}
+                  <img src="{{vesselUrl}}/{{url}}" class="hidden-image" alt="...">
+                {% endif %}
+              {% endfor %}
+                
+              
+      
+</div>
+<div id="main">
+
+
+<div class="custom-padding" id="report-content">
+    <h3 class="brand blue mb-5"><a href="/" class="brand-link">Scanese</a></h3>
+
+    <!-- pie and percent chart -->
+    <h1 class="display-1"><span class="counter" data-target="{{ mean.0.0 }}">0.00</span>%</h1>
+    <div class="row mt-5">
+        <div class="col-md-6 col-12 align-items-center my-5">
+            <h3 class="mb-5">Distribution graph</h3>
+            <div class="row align-items-center">
+                <div class="col-sm">
+                    <div id="infection-pie-chart" data-colors='["#e9692c", "#4169E1"]' class="apex-charts"></div>
+                </div>
+                <div class="col-sm align-self-center">
+                    <div class="mt-4 mt-sm-0">
+                        <div>
+                            <p class="mb-2">Vessel = <span class="text-muted font-size-14 fw-normal">{{ mean.0.0}} %</span></p>
+                            <h6></h6>
+                        </div>
+
+                        <div class="mt-4 pt-2">
+                            <p class="mb-2">Non Vessel = <span class="text-muted font-size-14 fw-normal">{{ mean.0.1 }} %</span></p>
+                            <h6></h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12 align-items-center my-5">
+            <h3 class="mb-5">Infection Percentage</h3>
+            <div class="row align-items-center">
+                <div class="col-sm">
+                    <div id="infection-overview" data-colors='["#5156be", "#34c38f"]' class="apex-charts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- bar graph -->
+
+    <div class="row large-vertical-margin">
+      <div>
+        <h3 class="mb-5">Comparison of all aspects</h3>
+        <div id="column_chart_datalabel" data-colors='["#5156be"]' class="apex-charts" dir="ltr"></div>
+      </div>
+      
+    </div>
+      
+
+    <!-- Contours -->
+
+    <div class="row large-vertical-margin">
+        <div class="col-md-6 col-12 my-auto">
+            <h3 class="display-4">Contours</h3>
+            <div class="col-8 mx-auto mt-4">
+              <p>Ok, how can we isolate the desired area?
+                So we used an algorithm to identify close sets or any kind of contours in the image. The algorithm we used is known as Marching squares.</p>
+            </div>
+            
+        </div>
+        <div class="col-md-6 col-12">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  
+                  {% for url in contour %}
+                  
+                  {% if forloop.counter0 == 0 %}
+                  <div class="carousel-item active" data-bs-interval="1000">
+                    <img src="{{contourUrl}}/{{url}}" class="d-block w-100" alt="...">
+                  </div>
+                  {% else %}
+                  <div class="carousel-item" data-bs-interval="1000">
+                    <img src="{{contourUrl}}/{{url}}" class="d-block w-100" alt="...">
+                  </div>
+                  {% endif %}
+                {% endfor %}
+                  
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+    </div>
+
+    <!-- Vessel Overlayed -->
+
+    <div class="row large-vertical-margin">
+      
+      <div class="col-md-6 col-12">
+          <div id="carouselExampleFade1" class="carousel slide carousel-fade" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                
+                {% for url in vessel_overlayed %}
+                
+                {% if forloop.counter0 == 0 %}
+                <div class="carousel-item active" data-bs-interval="1000">
+                  <img src="{{vesselUrl}}/{{url}}" class="d-block w-100" alt="...">
+                </div>
+                {% else %}
+                <div class="carousel-item" data-bs-interval="1000">
+                  <img src="{{vesselUrl}}/{{url}}" class="d-block w-100" alt="...">
+                </div>
+                {% endif %}
+              {% endfor %}
+                
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+      </div>
+      <div class="col-md-6 col-12 my-auto">
+        <h3 class="display-4">Vessel Overlayed</h3>
+        <div class="col-8 mx-auto mt-4">
+          <p>Cannot see the blockages clearly?
+            We have enhanced the images that will highlight the tumor cells or the alveoli blockages in the lungs.</p>
+        </div>
+    </div>
+  </div>
+  
+</div>
+
+  <a role="button" class="btn btn-lg btn-outline-light mb-5" id="PrintNow">Print Report</a>
+  <a role="button" class="btn btn-lg btn-outline-primary mb-5" href="/">Back Home</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    jQuery(window).ready(setTimeout(function(){
+        jQuery("#loader").remove();
+    }, 1500));
+</script>
+<script src="{% static '/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+
+<script>
+  function getChartColorsArray(r) {
+    r = $(r).attr("data-colors");
+    return (r = JSON.parse(r)).map(function (r) {
+        r = r.replace(" ", "");
+        if (-1 == r.indexOf("--")) return r;
+        r = getComputedStyle(document.documentElement).getPropertyValue(r);
+        return r || void 0;
+    });
+}
+
+var piechartColors = getChartColorsArray("#infection-pie-chart"),
+    options1 = {
+        series: {{ mean.0 }},
+        chart: { width: 227, height: 227, type: "pie" },
+        labels: ["Vessel", "Non Vessel"],
+        colors: piechartColors,
+        stroke: { width: 0 },
+        legend: { show: !1 },
+        responsive: [{ breakpoint: 480, options: { chart: { width: 200 } } }],
+    };
+
+setTimeout(() => (chart = new ApexCharts(document.querySelector("#infection-pie-chart"), options1)).render(),1600);
+
+var radialchartColors = getChartColorsArray("#infection-overview"),
+    options2 = {
+        chart: { height: 270, type: "radialBar", offsetY: -10 },
+        plotOptions: {
+            
+            radialBar: {
+              track: {
+                background: '#101010',
+              },
+                startAngle: -130,
+                endAngle: 130,
+                dataLabels: {
+                    name: { show: !1},
+                    value: {
+                        offsetY: 10,
+                        fontSize: "18px",
+                        color: 'white',
+                        formatter: function (r) {
+                            return r + "%";
+                        },
+                    },
+                },
+            },
+        },
+        colors: ['#e9692c'],
+        fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", gradientToColors: ['#4169E1'],shadeIntensity: 0.15, inverseColors: !1, opacityFrom: 1, opacityTo: 1, stops: [20, 60] } },
+        stroke: { dashArray: 4 },
+        legend: { show: !1 },
+        series: [{{ mean.0.0 }}],
+        labels: ["Series A"],
+    };
+  setTimeout(() => (chart = new ApexCharts(document.querySelector("#infection-overview"), options2)).render(),1700);
+  
+  var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
+    options = {
+        chart: { height: 350, type: "bar", toolbar: { show: !1 } },
+        plotOptions: { bar: { borderRadius: 10, dataLabels: { position: "top" } } },
+        dataLabels: {
+            enabled: !0,
+            formatter: function (e) {
+                return e + "%";
+            },
+            offsetY: -22,
+            style: { fontSize: "12px", colors: ["gray"] },
+        },
+        series: [{ name: "Vessel Percentage", data: {{ percentage }} }],
+        colors: ['#4169E1'],
+        grid: { borderColor: "#f1f1f1" },
+        xaxis: {
+            categories: {{ frames|safe }},
+            position: "top",
+            labels: { offsetY: -18 },
+            axisBorder: { show: !1 },
+            axisTicks: { show: !1 },
+            crosshairs: { fill: { type: "gradient", gradient: { colorFrom: "#D8E3F0", colorTo: "#BED1E6", stops: [0, 100], opacityFrom: 0.4, opacityTo: 0.5 } } },
+            tooltip: { enabled: !0, offsetY: -35 },
+        },
+        yaxis: {
+            axisBorder: { show: !1 },
+            axisTicks: { show: !1 },
+            labels: {
+                show: !1,
+                formatter: function (e) {
+                    return e + "%";
+                },
+            },
+        },
+        tooltip: {
+          theme: 'dark',
+        },
+        title: { text: "Infected/Vesseled area percentage comparison", floating: !0, offsetY: 330, align: "center", style: { color: "#e9692c", fontWeight: "500" } },
+    };
+;
+setTimeout(() => (chart = new ApexCharts(document.querySelector("#column_chart_datalabel"), options)).render(),1800);
+
+var piechartColors1 = getChartColorsArray("#h-infection-pie-chart"),
+    options1 = {
+        series: {{ mean.0 }},
+        chart: { width: 227, height: 227, type: "pie" },
+        labels: ["Vessel", "Non Vessel"],
+        colors: piechartColors1,
+        stroke: { width: 0 },
+        legend: { show: !1 },
+        responsive: [{ breakpoint: 480, options: { chart: { width: 200 } } }],
+    };
+
+setTimeout(() => (chart = new ApexCharts(document.querySelector("#h-infection-pie-chart"), options1)).render(),1900);
+
+var radialchartColors1 = getChartColorsArray("#h-infection-overview"),
+    options2 = {
+        chart: { height: 270, type: "radialBar", offsetY: -10 },
+        plotOptions: {
+            
+            radialBar: {
+              track: {
+                background: '#101010',
+              },
+                startAngle: -130,
+                endAngle: 130,
+                dataLabels: {
+                    name: { show: !1},
+                    value: {
+                        offsetY: 10,
+                        fontSize: "18px",
+                        color: 'white',
+                        formatter: function (r) {
+                            return r + "%";
+                        },
+                    },
+                },
+            },
+        },
+        colors: ['#e9692c'],
+        fill: { type: "gradient", gradient: { shade: "dark", type: "vertical", gradientToColors: ['#4169E1'],shadeIntensity: 0.15, inverseColors: !1, opacityFrom: 1, opacityTo: 1, stops: [20, 60] } },
+        stroke: { dashArray: 4 },
+        legend: { show: !1 },
+        series: [{{ mean.0.0 }}],
+        labels: ["Series A"],
+    };
+  setTimeout(() => (chart = new ApexCharts(document.querySelector("#h-infection-overview"), options2)).render(),2000);
+  
+  var columnDatalabelColors1 = getChartColorsArray("#h-column_chart_datalabel"),
+    options = {
+        chart: { height: 350, type: "bar", toolbar: { show: !1 } },
+        plotOptions: { bar: { borderRadius: 10, dataLabels: { position: "top" } } },
+        dataLabels: {
+            enabled: !0,
+            formatter: function (e) {
+                return e + "%";
+            },
+            offsetY: -22,
+            style: { fontSize: "12px", colors: ["gray"] },
+        },
+        series: [{ name: "Vessel Percentage", data: {{ percentage }} }],
+        colors: ['#4169E1'],
+        grid: { borderColor: "#f1f1f1" },
+        xaxis: {
+            categories: {{ frames|safe }},
+            position: "top",
+            labels: { offsetY: -18 },
+            axisBorder: { show: !1 },
+            axisTicks: { show: !1 },
+            crosshairs: { fill: { type: "gradient", gradient: { colorFrom: "#D8E3F0", colorTo: "#BED1E6", stops: [0, 100], opacityFrom: 0.4, opacityTo: 0.5 } } },
+            tooltip: { enabled: !0, offsetY: -35 },
+        },
+        yaxis: {
+            axisBorder: { show: !1 },
+            axisTicks: { show: !1 },
+            labels: {
+                show: !1,
+                formatter: function (e) {
+                    return e + "%";
+                },
+            },
+        },
+        tooltip: {
+          theme: 'dark',
+        },
+        title: { text: "Infected/Vesseled area percentage comparison", floating: !0, offsetY: 330, align: "center", style: { color: "#e9692c", fontWeight: "500" } },
+    };
+;
+setTimeout(() => (chart = new ApexCharts(document.querySelector("#h-column_chart_datalabel"), options)).render(),2100);
+
+// Selector
+const counters = document.querySelectorAll('.counter');
+// Main function
+setTimeout(() => {
+    for(let n of counters) {
+        
+        const updateCount = () => {
+          const target = + n.getAttribute('data-target');
+          const count = + n.innerText;
+          const speed = 200; // change animation speed here
+          const inc = target / speed; 
+          if(count < target) {
+            n.innerText = (count + inc).toFixed(2);
+            setTimeout(updateCount,1);
+          } else {
+            n.innerText = target;
+          }
+        }
+        updateCount();
+      }
+},2000);
+
+$("#PrintNow").on("click", function () {
+    var divContents = $("#hidden-report").html();
+    var graph1 = $("#infection-pie-chart").html();
+    var graph2 = $("#infection-overview").html();
+    var graph3 = $("#column_chart_datalabel").html();
+    var printWindow = window.open('', '', 'height=1240,width=1754');
+    // console.log(window.document);
+    printWindow.document.write('<html><head>');
+    printWindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">');
+    //printWindow.document.write(`<link href="static/css/styles.css" rel="stylesheet" type="text/css">`);
+    printWindow.document.write("<style>body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;align-items:center;text-align:center;}#hidden-report{margin:5%}.hidden-brand{color:#4169e1;font-size:1.5rem}.hidden-display-1{font-size:6rem}.hidden-display-1{font-size:3rem}.hidden-image{width:35vw;margin:10px}.h-container{display:flex;align-items:center;justify-content:center;text-align:center;}#h-infection-overview{width:200px!important;display:flex;align-items:center;justify-content:center}.hori-margin1{margin-left:15%;margin-right:2%;}.hori-margin2{margin-left:35%;margin-right:2%;}");
+
+    printWindow.document.write('</style>');
+    printWindow.document.write('<title>Scanese</title></head><body>');
+    printWindow.document.write(divContents);
+    
+    printWindow.document.write('<p class="watermark text-center my-5">Created using Scanese</p>');
+    printWindow.document.write('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">');
+    printWindow.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer">');  
+    //printWindow.document.write(`<script>function getChartColorsArray(e){return e=$(e).attr("data-colors"),(e=JSON.parse(e)).map(function(e){return-1==(e=e.replace(" ","")).indexOf("--")?e:(e=getComputedStyle(document.documentElement).getPropertyValue(e))||void 0})}var piechartColors=getChartColorsArray("#infection-pie-chart"),options1={series:{{ mean.0 }},chart:{width:227,height:227,type:"pie"},labels:["Vessel","Non Vessel"],colors:piechartColors,stroke:{width:0},legend:{show:!1},responsive:[{breakpoint:480,options:{chart:{width:200}}}]};setTimeout(()=>(chart=new ApexCharts(document.querySelector("#infection-pie-chart"),options1)).render(),1600);var radialchartColors=getChartColorsArray("#infection-overview"),options2={chart:{height:270,type:"radialBar",offsetY:-10},plotOptions:{radialBar:{track:{background:"#101010"},startAngle:-130,endAngle:130,dataLabels:{name:{show:!1},value:{offsetY:10,fontSize:"18px",color:"white",formatter:function(e){return e+"%"}}}}},colors:["#e9692c"],fill:{type:"gradient",gradient:{shade:"dark",type:"vertical",gradientToColors:["#4169E1"],shadeIntensity:.15,inverseColors:!1,opacityFrom:1,opacityTo:1,stops:[20,60]}},stroke:{dashArray:4},legend:{show:!1},series:[{{ mean.0.0 }}],labels:["Series A"]};setTimeout(()=>(chart=new ApexCharts(document.querySelector("#infection-overview"),options2)).render(),1700);var columnDatalabelColors=getChartColorsArray("#column_chart_datalabel"),options={chart:{height:350,type:"bar",toolbar:{show:!1}},plotOptions:{bar:{borderRadius:10,dataLabels:{position:"top"}}},dataLabels:{enabled:!0,formatter:function(e){return e+"%"},offsetY:-22,style:{fontSize:"12px",colors:["#fff"]}},series:[{name:"Vessel Percentage",data:{{ percentage }}}],colors:["#4169E1"],grid:{borderColor:"#f1f1f1"},xaxis:{categories:{{ frames|safe }},position:"top",labels:{offsetY:-18},axisBorder:{show:!1},axisTicks:{show:!1},crosshairs:{fill:{type:"gradient",gradient:{colorFrom:"#D8E3F0",colorTo:"#BED1E6",stops:[0,100],opacityFrom:.4,opacityTo:.5}}},tooltip:{enabled:!0,offsetY:-35}},yaxis:{axisBorder:{show:!1},axisTicks:{show:!1},labels:{show:!1,formatter:function(e){return e+"%"}}},tooltip:{theme:"dark"},title:{text:"Infected/Vesseled area percentage comparison",floating:!0,offsetY:330,align:"center",style:{color:"#e9692c",fontWeight:"500"}}};setTimeout(()=>(chart=new ApexCharts(document.querySelector("#column_chart_datalabel"),options)).render(),1800));`);
+    
+    printWindow.document.write('</body>');
+    printWindow.document.write('</html>');
+    setTimeout(() => {}, 10000);
+    printWindow.document.close();
+    printWindow.print();
+});
+
+
+
+
+</script>
+{% endblock %}

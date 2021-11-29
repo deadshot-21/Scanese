@@ -1,0 +1,103 @@
+body {
+    text-align: center;
+    background-color: #202020;
+    color: white;
+}
+
+.brand {
+    font-family: 'Lobster Two', cursive;
+    font-weight: bold;
+}
+
+.brand-link {
+    text-decoration: none !important;
+}
+
+.blue {
+    color: #4169E1;
+}
+
+.large {
+    font-size: 6rem;
+}
+
+.custom-padding {
+    margin: 5% 12%;
+}
+
+/*Loader*/
+#loader{
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+}
+.loader, .loader2{
+    height: 100vh;
+    width: 100vw;
+    background-color: #4169E1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader2{
+    background-color: rgb(65, 105, 225, 0.95);
+}
+.loader-text{
+    animation: loading 2s infinite;
+    color: white;
+}
+@keyframes loading{
+    0%{
+        font-size: 4rem;
+    }
+    50%{
+        font-size: 5rem;
+    }
+    100%{
+        font-size: 4rem;
+    }
+
+}
+
+#summarize-loader{
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    display: none;
+}
+
+#summarize-loader h1{
+    color: #fff;
+}
+
+.carousel, img {
+    background-color: #202020 !important;
+}
+
+/* graphs------------------ */
+
+.card, #infection-overview {
+    background-color: #202020;
+}
+
+.large-vertical-margin {
+    margin-top: 150px;
+    margin-bottom: 150px;
+}
+
+.watermark {
+    color: gray;
+}
+
+/* report */
+#hidden-report{
+    position: absolute;
+    top:0;
+    z-index: -1;
+    max-height: 100vh;
+    overflow: scroll;
+}
+#main {
+    background-color: #202020;
+}

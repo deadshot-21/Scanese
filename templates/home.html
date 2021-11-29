@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="summarize-loader">
+    <div class="loader2">
+        <!-- <img src="../static/img/light.svg" alt="" class="loader-img"> -->
+        <h1 class="me-4">Processing</h1>
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+    </div>
+</div>
+<div class="custom-padding">
+    <h1 class="display-1 brand large blue">Scanese</h1>
+    <form action="processing" method="POST" enctype="multipart/form-data" class="my-5 analyse">
+        {% csrf_token %}
+        <div class="mb-3 col-md-6 col-12 mx-auto">
+            <!-- <label for="file" class="form-label">Select</label> -->
+            <input class="form-control" type="file" id="myfile" name="myfile" accept=".nii.gz" multiple required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Upload</button>
+    </form>
+    <!-- <button class="btn btn-lg btn-outline-primary my-5" type="button" href="/result"> See previous results</button> -->
+    <a class="btn btn-lg btn-outline-primary my-5" href="/result" role="button">See previous results</a>
+    
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $('form.analyse').on('submit',function(){
+        jQuery("#summarize-loader").show();
+     });
+</script>
+{% endblock %}
